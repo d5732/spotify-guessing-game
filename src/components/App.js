@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { Route } from "react-router-dom";
-
 import Home from "./Home";
+import Guess from "./Guess";
+import Result from "./Result";
 
 const App = () => {
-    const [songs, setSongs] = useState([]);
+    const [artists, setArtists] = useState([]);
+    const [config, setConfig] = useState({});
+
+    const homeProps = { config, setConfig };
+
     return (
         <div>
-            <Route exact path="/" component={Home} />
-            {/* <Route exact path="/guess" component={Guess} /> */}
-            {/* <Route exact path="/result" component={Result} /> */}
+            <Route exact path="/">
+                <Home {...homeProps} />
+            </Route>
+            <Route exact path="/guess">
+                <Guess />
+            </Route>
+            <Route exact path="/result">
+                <Result />
+            </Route>
         </div>
     );
 };

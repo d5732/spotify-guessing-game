@@ -1,3 +1,4 @@
+import React from "react";
 const Result = () => {
     return <div>Result</div>;
 };

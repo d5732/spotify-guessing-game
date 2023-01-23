@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import ConfigChoicesContainer from "./home/ConfigChoicesContainer";
 import fetchFromSpotify, { request } from "../services/api";
 
 const AUTH_ENDPOINT =
@@ -8,8 +9,6 @@ const TOKEN_KEY = "whos-who-access-token";
 const Home = ({
     config,
     setConfig,
-    songs,
-    setSongs,
     artists,
     setArtists,
     correctChoice,
@@ -21,6 +20,8 @@ const Home = ({
     const [genresLoading, setGenresLoading] = useState(false);
     const [configLoading, setConfigLoading] = useState(false);
     const [token, setToken] = useState("");
+
+    console.log(config);
 
     const loadGenres = async (token) => {
         setGenresLoading(true);
@@ -74,14 +75,9 @@ const Home = ({
         return <div>Loading...</div>;
     }
 
-    const handlePlay = async (selectedGenre) => {
-        const response = await fetchFromSpotify({
-            token,
-            endpoint: `recommendations?limit=4&market=ES&seed_genres=${selectedGenre}`,
-            // endpoint: `recommendations?limit=${choiceLimit}&market=ES&seed_genres=${selectedGenre}`
-        });
-        console.log(response);
-        // todo: set app-level states with passed props from parent (app)
+    const handlePlay = () => {
+        //todo: proceed
+        setConfig({ selectedGenre, qtySongs, qtyArtists });
     };
 
     return (
@@ -98,7 +94,19 @@ const Home = ({
                     </option>
                 ))}
             </select>
-            <button onClick={() => handlePlay(selectedGenre)}>Play!</button>
+            <ConfigChoicesContainer
+                min={1}
+                config={config}
+                setConfig={setConfig}
+                type="songs"
+            />
+            <ConfigChoicesContainer
+                min={2}
+                config={config}
+                setConfig={setConfig}
+                type="artists"
+            />
+            <button onClick={() => handlePlay()}>Play!</button>
         </div>
         // todo: save current config to localStorage when proceeding to
         //  next page

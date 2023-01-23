@@ -1,15 +1,15 @@
-import React, { useState, createContext } from "react";
+import React, { useState } from "react";
 import { Route } from "react-router-dom";
-import Home from "./Home";
 import Guess from "./Guess";
+import Home from "./Home";
 import Result from "./Result";
 
 const App = () => {
     const [artists, setArtists] = useState([]);
     const [config, setConfig] = useState({
-        selectedGenre: undefined,
-        qtySongs: 1,
-        qtyArtists: 2
+        selectedGenre: localStorage.getItem('selectedGenre'),
+        qtySongs: Number(localStorage.getItem('qtySongs')) ?? 1,
+        qtyArtists: Number(localStorage.getItem('qtyArtists')) ?? 2
     });
 
     const homeProps = { config, setConfig };
@@ -20,7 +20,7 @@ const App = () => {
                 <Home {...homeProps} />
             </Route>
             <Route exact path="/guess">
-                <Guess />
+                <Guess {...homeProps}/>
             </Route>
             <Route exact path="/result">
                 <Result />

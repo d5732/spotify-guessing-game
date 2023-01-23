@@ -1,6 +1,6 @@
 import React from "react";
-const Guess = ({ genre, config, setArtists, setCorrectChoice }) => {
-    const getArtists = async (config.selectedGenre) => {
+const Guess = ({ config, setArtists, setCorrectChoice }) => {
+    const getArtists = async (config) => {
         const response = await fetchFromSpotify({
             token,
             endpoint: `recommendations?limit=4&market=ES&seed_genres=${selectedGenre}`,

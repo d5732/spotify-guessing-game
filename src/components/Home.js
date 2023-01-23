@@ -21,8 +21,6 @@ const Home = ({
     const [configLoading, setConfigLoading] = useState(false);
     const [token, setToken] = useState("");
 
-    console.log(config);
-
     const loadGenres = async (token) => {
         setGenresLoading(true);
         const response = await fetchFromSpotify({
@@ -107,6 +105,7 @@ const Home = ({
                 type="artists"
             />
             <button onClick={() => handlePlay()}>Play!</button>
+            <button onClick={() => console.log(config)}>debug</button>
         </div>
         // todo: save current config to localStorage when proceeding to
         //  next page

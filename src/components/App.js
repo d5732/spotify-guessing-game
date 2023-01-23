@@ -6,7 +6,11 @@ import Result from "./Result";
 
 const App = () => {
     const [artists, setArtists] = useState([]);
-    const [config, setConfig] = useState({});
+    const [config, setConfig] = useState({
+        selectedGenre: undefined,
+        qtySongs: 1,
+        qtyArtists: 2
+    });
 
     const homeProps = { config, setConfig };
 

@@ -8,11 +8,7 @@ const TOKEN_KEY = "whos-who-access-token";
 
 const Home = ({
     config,
-    setConfig,
-    artists,
-    setArtists,
-    correctChoice,
-    setCorrectChoice,
+    setConfig
 }) => {
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState("");
@@ -75,36 +71,46 @@ const Home = ({
 
     const handlePlay = () => {
         //todo: proceed
-        setConfig({ selectedGenre, qtySongs, qtyArtists });
+        setConfig({...config, selectedGenre });
+        localStorage.setItem('selectedGenre', selectedGenre);
+        localStorage.setItem('qtyArtists', config.qtyArtists);
+        localStorage.setItem('qtySongs', config.qtySongs);
+        location.assign('guess');
     };
 
     return (
         <div>
-            Genre:
+            <h1>Guessing Game</h1>
+            <h3>Genre:</h3>
             <select
                 value={selectedGenre}
                 onChange={(event) => setSelectedGenre(event.target.value)}
             >
-                <option value="" />
+                <option value={localStorage.getItem('selectedGenre')}>
+                    {localStorage.getItem('selectedGenre')}
+                </option>
                 {genres.map((genre) => (
                     <option key={genre} value={genre}>
                         {genre}
                     </option>
                 ))}
             </select>
+
+            <h3># Song Choices</h3>
             <ConfigChoicesContainer
                 min={1}
                 config={config}
                 setConfig={setConfig}
                 type="songs"
-            />
+                />
+            <h3># Artist Choices</h3>
             <ConfigChoicesContainer
                 min={2}
                 config={config}
                 setConfig={setConfig}
                 type="artists"
             />
-            <button onClick={() => handlePlay()}>Play!</button>
+            <button onClick={() => handlePlay()} disabled={selectedGenre === ''}>Play!</button>
             <button onClick={() => console.log(config)}>debug</button>
         </div>
         // todo: save current config to localStorage when proceeding to

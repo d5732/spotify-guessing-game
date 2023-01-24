@@ -22,7 +22,13 @@ const Result = ({ artist, correctGuess, guess }) => {
             color="#fff"
             px={2}
             py={0.75}
-            style={{ width: "10rem", ...guessStyles }}
+            style={{
+                width: "10rem",
+                textAlign: "center",
+                fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+                textTransform: "uppercase",
+                ...guessStyles,
+            }}
         >
             {artist}
         </Box>

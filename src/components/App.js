@@ -52,19 +52,24 @@ const App = () => {
     const resultProps = { artists, correctGuess, guess };
 
     return (
-        <ThemeProvider theme={theme}>
-            <Container maxWidth="sm">
-                <Route exact path="/">
-                    <Home {...homeProps} />
-                </Route>
-                <Route exact path="/guess">
-                    <Guess {...guessProps} />
-                </Route>
-                <Route exact path="/results">
-                    <Results {...resultProps} />
-                </Route>
-            </Container>
-        </ThemeProvider>
+        <div style={{ display: "flex", height: "100vh" }}>
+            <ThemeProvider theme={theme}>
+                <Container
+                    maxWidth="sm"
+                    style={{ marginTop: "auto", marginBottom: "auto" }}
+                >
+                    <Route exact path="/">
+                        <Home {...homeProps} />
+                    </Route>
+                    <Route exact path="/guess">
+                        <Guess {...guessProps} />
+                    </Route>
+                    <Route exact path="/results">
+                        <Results {...resultProps} />
+                    </Route>
+                </Container>
+            </ThemeProvider>
+        </div>
     );
 };
 

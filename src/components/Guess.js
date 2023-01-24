@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
+import styled from "styled-components";
 
-const Guess = ({ config, setArtists, setCorrectChoice, token }) => {
+const Guess = ({ artists, songs, setGuess }) => {
 
-
-    // useEffect(() => {
-    //     getArtists()
-    // },[])
+    
 
     return (
         <div>
             Game
+            <button onClick={() => console.log("songs", songs, "artists", artists)}>debug</button>
         </div>
     );
 };

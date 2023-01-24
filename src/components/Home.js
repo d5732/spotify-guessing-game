@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import fetchFromSpotify, { request } from "../services/api";
 import ConfigChoicesContainer from "./home/ConfigChoicesContainer";
 
@@ -77,21 +78,22 @@ const Home = ({
     }
 
     const getSongs = async (_artists, _correctIdx) => {
-        let _tracks = new Set();
+        let _tracks;
         let response;
-        while (_tracks.size < config.qtySongs) {
-            response = await fetchFromSpotify({
-                token,
-                endpoint: `artists/${_artists[_correctIdx].id}/top-tracks?market=US`,
-                // artists/22bE4uQ6baNwSHPVcDxLCe/top-tracks?market=ES"
-                // todo: limit? could network optimize if limit param can be used
-            });
-            console.log("pizza response: ", response);
-            _tracks.add(response.tracks.filter((x) => x.preview_url !== null));
-        }
-        console.log("sleepytime soon", _tracks);
-        console.log("getSongs response: ", response);
-        const _songs = setSongs();
+        response = await fetchFromSpotify({
+            token,
+            endpoint: `artists/${_artists[_correctIdx].id}/top-tracks?market=US`,
+            // artists/22bE4uQ6baNwSHPVcDxLCe/top-tracks?market=ES"
+            // todo: limit? could network optimize if limit param can be used
+        });
+        //console.log("pizza response: ", response);
+        _tracks = response.tracks.filter((x) => x.preview_url !== null);
+        console.log("tracks", _tracks)
+        _tracks = _tracks.slice(0, config.qtySongs)
+        console.log("PIZZA", _tracks)
+        // console.log("sleepytime soon", _tracks);
+        // console.log("getSongs response: ", response);
+        setSongs(_tracks);
     };
 
     const getArtists = async () => {
@@ -129,7 +131,6 @@ const Home = ({
 
         getArtists();
 
-        // location.assign('guess');
     };
 
     return (
@@ -164,12 +165,12 @@ const Home = ({
                 setConfig={setConfig}
                 type="artists"
             />
-            <button
+            <Link to="/guess"
                 onClick={() => handlePlay()}
                 disabled={selectedGenre === ""}
             >
                 Play!
-            </button>
+            </Link>
             <button onClick={() => console.log(config, token)}>debug</button>
         </div>
         // todo: save current config to localStorage when proceeding to

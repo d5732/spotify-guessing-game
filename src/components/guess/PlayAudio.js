@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Howl, Howler } from "howler";
 import Button from "@material-ui/core/Button";
 
-
 const PlayAudio = ({ idx, mp3, playing, setPlaying }) => {
     const [id, setId] = useState("");
     const [sound, setSound] = useState(
@@ -26,37 +25,36 @@ const PlayAudio = ({ idx, mp3, playing, setPlaying }) => {
         sound.pause(id);
     };
 
-    // console.log("Play audio re-rendered", id);
     return (
-      <>
-        {/* <button
+        <>
+            {/* <button
                 onClick={() =>
                     console.log("playing:", playing, "sound", sound, "id", id)
                 }
             >
                 debug
             </button> */}
-        {!playing[idx] && (
-          <Button
-            onClick={handlePlay}
-            variant="contained"
-            color="primary"
-            style={{ width: "100%" }}
-          >
-            play
-          </Button>
-        )}
-        {playing[idx] && (
-          <Button
-            onClick={() => handlePause(id)}
-            variant="outlined"
-            color="primary"
-            style={{ width: "100%" }}
-          >
-            pause
-          </Button>
-        )}
-      </>
+            {!playing[idx] && (
+                <Button
+                    onClick={handlePlay}
+                    variant="outlined"
+                    color="primary"
+                    style={{ width: "100%" }}
+                >
+                    play
+                </Button>
+            )}
+            {playing[idx] && (
+                <Button
+                    onClick={() => handlePause(id)}
+                    variant="outlined"
+                    color="primary"
+                    style={{ width: "100%" }}
+                >
+                    pause
+                </Button>
+            )}
+        </>
     );
 };
 

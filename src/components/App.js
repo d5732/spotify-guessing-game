@@ -5,7 +5,30 @@ import { Route } from "react-router-dom";
 import Guess from "./Guess";
 import Home from "./Home";
 import Results from "./Results";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 
+const theme = createTheme({
+    palette: {
+        primary: {
+            light: "#000",
+            main: "#63adf2",
+            dark: "#3B6FC8",
+            contrastText: "#fff",
+        },
+        secondary: {
+            light: "#000",
+            main: "#3f51b5",
+            dark: "#002884",
+            contrastText: "#fff",
+        },
+        warning: {
+            light: "#000",
+            main: "#8b1e3f",
+            dark: "#002884",
+            contrastText: "#fff",
+        },
+    },
+});
 
 const App = () => {
     const [artists, setArtists] = useState([]);
@@ -29,7 +52,8 @@ const App = () => {
     const resultProps = { artists, correctGuess, guess };
 
     return (
-        <Container maxWidth="sm">
+        <ThemeProvider theme={theme}>
+            <Container maxWidth="sm">
                 <Route exact path="/">
                     <Home {...homeProps} />
                 </Route>
@@ -39,7 +63,8 @@ const App = () => {
                 <Route exact path="/results">
                     <Results {...resultProps} />
                 </Route>
-        </Container>
+            </Container>
+        </ThemeProvider>
     );
 };
 

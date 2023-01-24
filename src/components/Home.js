@@ -112,7 +112,7 @@ const Home = ({
         }
         setArtists(_artists);
         const _correctIdx = Math.floor(Math.random() * config.qtyArtists);
-        setCorrectGuess(_artists[_correctIdx]);
+        setCorrectGuess(_artists[_correctIdx].name);
         getSongs(_artists, _correctIdx);
     };
 

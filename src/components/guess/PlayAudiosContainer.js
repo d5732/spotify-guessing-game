@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import PlayAudio from "./PlayAudio";
+import Box from "@material-ui/core/Box";
+
 const PlayAudiosContainer = ({ songs }) => {
     const [playing, setPlaying] = useState({ 0: false, 1: false, 2: false });
 
     return (
-        <div>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          style={{gap: "1rem"}}
+        >
             {songs[0] && (
                 <PlayAudio
                     idx={0}
@@ -29,7 +36,7 @@ const PlayAudiosContainer = ({ songs }) => {
                     setPlaying={setPlaying}
                 />
             )}
-        </div>
+        </Box>
     );
 };
 

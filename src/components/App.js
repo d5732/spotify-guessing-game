@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import Container from "@material-ui/core/Container";
+
 import { Route } from "react-router-dom";
 import Guess from "./Guess";
 import Home from "./Home";
 import Results from "./Results";
+
 
 const App = () => {
     const [artists, setArtists] = useState([]);
@@ -26,17 +29,17 @@ const App = () => {
     const resultProps = { artists, correctGuess, guess };
 
     return (
-        <div>
-            <Route exact path="/">
-                <Home {...homeProps} />
-            </Route>
-            <Route exact path="/guess">
-                <Guess {...guessProps} />
-            </Route>
-            <Route exact path="/results">
-                <Results {...resultProps} />
-            </Route>
-        </div>
+        <Container maxWidth="sm">
+                <Route exact path="/">
+                    <Home {...homeProps} />
+                </Route>
+                <Route exact path="/guess">
+                    <Guess {...guessProps} />
+                </Route>
+                <Route exact path="/results">
+                    <Results {...resultProps} />
+                </Route>
+        </Container>
     );
 };
 

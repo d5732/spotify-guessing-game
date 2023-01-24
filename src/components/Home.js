@@ -12,8 +12,7 @@ const Home = ({
     setConfig,
     setArtists,
     setSongs,
-    correctArtist,
-    setCorrectArtist,
+    setCorrectGuess,
 }) => {
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState(
@@ -86,13 +85,8 @@ const Home = ({
             // artists/22bE4uQ6baNwSHPVcDxLCe/top-tracks?market=ES"
             // todo: limit? could network optimize if limit param can be used
         });
-        //console.log("pizza response: ", response);
         _tracks = response.tracks.filter((x) => x.preview_url !== null);
-        console.log("tracks", _tracks)
         _tracks = _tracks.slice(0, config.qtySongs)
-        console.log("PIZZA", _tracks)
-        // console.log("sleepytime soon", _tracks);
-        // console.log("getSongs response: ", response);
         setSongs(_tracks);
     };
 
@@ -110,7 +104,7 @@ const Home = ({
         }
         console.log("123456789pizza", _tracks);
         const _artists = [];
-        for (const x of response.tracks.slice(0, 4)) {
+        for (const x of response.tracks.slice(0, config.qtyArtists)) {
             _artists.push({
                 name: x.artists[0].name,
                 id: x.artists[0].id,
@@ -118,7 +112,7 @@ const Home = ({
         }
         setArtists(_artists);
         const _correctIdx = Math.floor(Math.random() * config.qtyArtists);
-        setCorrectArtist(); // 0,1,2,3
+        setCorrectGuess(_artists[_correctIdx]);
         getSongs(_artists, _correctIdx);
     };
 
@@ -130,7 +124,6 @@ const Home = ({
         localStorage.setItem("qtySongs", config.qtySongs);
 
         getArtists();
-
     };
 
     return (

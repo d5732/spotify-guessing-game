@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Route } from "react-router-dom";
 import Guess from "./Guess";
 import Home from "./Home";
-import Result from "./Result";
+import Results from "./Results";
 
 const App = () => {
     const [artists, setArtists] = useState([]);
-    const [correctArtist, setCorrectArtist] = useState();
+    const [correctGuess, setCorrectGuess] = useState();
     const [guess, setGuess] = useState();
     const [songs, setSongs] = useState();
     const [config, setConfig] = useState({
@@ -20,10 +20,10 @@ const App = () => {
         setConfig,
         setArtists,
         setSongs,
-        setCorrectArtist,
+        setCorrectGuess,
     };
     const guessProps = { artists, songs, setGuess };
-    const resultProps = { artists, correctArtist, guess };
+    const resultProps = { artists, correctGuess, guess };
 
     return (
         <div>
@@ -33,8 +33,8 @@ const App = () => {
             <Route exact path="/guess">
                 <Guess {...guessProps} />
             </Route>
-            <Route exact path="/result">
-                <Result {...resultProps} />
+            <Route exact path="/results">
+                <Results {...resultProps} />
             </Route>
         </div>
     );

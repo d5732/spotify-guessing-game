@@ -7,13 +7,7 @@ const AUTH_ENDPOINT =
     "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
 
-const Home = ({
-    config,
-    setConfig,
-    setArtists,
-    setSongs,
-    setCorrectGuess,
-}) => {
+const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState(
         localStorage.getItem("selectedGenre") ?? ""
@@ -44,6 +38,7 @@ const Home = ({
     };
 
     useEffect(() => {
+        setArtists(), setSongs(), setCorrectGuess();
         setAuthLoading(true);
 
         const storedTokenString = localStorage.getItem(TOKEN_KEY);
@@ -86,7 +81,7 @@ const Home = ({
             // todo: limit? could network optimize if limit param can be used
         });
         _tracks = response.tracks.filter((x) => x.preview_url !== null);
-        _tracks = _tracks.slice(0, config.qtySongs)
+        _tracks = _tracks.slice(0, config.qtySongs);
         setSongs(_tracks);
     };
 
@@ -158,7 +153,8 @@ const Home = ({
                 setConfig={setConfig}
                 type="artists"
             />
-            <Link to="/guess"
+            <Link
+                to="/guess"
                 onClick={() => handlePlay()}
                 disabled={selectedGenre === ""}
             >

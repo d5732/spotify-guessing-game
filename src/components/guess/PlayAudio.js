@@ -6,34 +6,43 @@ const PlayButton = styled.button`
     padding: 1rem;
 `;
 
-const PlayAudio = ({ mp3 }) => {
+const PlayAudio = ({ idx, mp3, playing, setPlaying }) => {
     const [id, setId] = useState("");
     const [sound, setSound] = useState(
         new Howl({
             src: [mp3],
             format: ["mp3"],
-            volume: 0.01,
+            loop: true,
+            volume: 0.1,
         })
     );
-    const [playing, setPlaying] = useState(false);
 
     const handlePlay = () => {
-        setPlaying(true);
+        if (Object.values(playing).includes(true)) {
+            Howler.stop();
+        }
+        setPlaying({ [idx]: true });
         setId(sound.play());
     };
     const handlePause = (id) => {
-        setPlaying(false);
+        setPlaying({});
         sound.pause(id);
     };
 
-    console.log("Play audio re-rendered", id);
+    // console.log("Play audio re-rendered", id);
     return (
         <>
-            <button onClick={() => console.log("boolean", playing, "id", id)}>
+            <button
+                onClick={() =>
+                    console.log("playing:", playing, "sound", sound, "id", id)
+                }
+            >
                 debug
             </button>
-            {!playing && <PlayButton onClick={handlePlay}>play</PlayButton>}
-            {playing && (
+            {!playing[idx] && (
+                <PlayButton onClick={handlePlay}>play</PlayButton>
+            )}
+            {playing[idx] && (
                 <PlayButton onClick={() => handlePause(id)}>pause</PlayButton>
             )}
         </>

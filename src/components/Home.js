@@ -6,7 +6,14 @@ const AUTH_ENDPOINT =
     "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
 
-const Home = ({ config, setConfig }) => {
+const Home = ({
+    config,
+    setConfig,
+    setArtists,
+    setSongs,
+    correctArtist,
+    setCorrectArtist,
+}) => {
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState(
         localStorage.getItem("selectedGenre") ?? ""
@@ -69,13 +76,48 @@ const Home = ({ config, setConfig }) => {
         return <div>Loading...</div>;
     }
 
+    const getSongs = async (_artists, _correctIdx) => {
+        let _tracks = new Set();
+        let response;
+        while (_tracks.size < config.qtySongs) {
+            response = await fetchFromSpotify({
+                token,
+                endpoint: `artists/${_artists[_correctIdx].id}/top-tracks?market=US`,
+                // artists/22bE4uQ6baNwSHPVcDxLCe/top-tracks?market=ES"
+                // todo: limit? could network optimize if limit param can be used
+            });
+            console.log("pizza response: ", response);
+            _tracks.add(response.tracks.filter((x) => x.preview_url !== null));
+        }
+        console.log("sleepytime soon", _tracks);
+        console.log("getSongs response: ", response);
+        const _songs = setSongs();
+    };
+
     const getArtists = async () => {
-        const response = await fetchFromSpotify({
-            token,
-            endpoint: `recommendations?limit=${config.qtyArtists}&market=ES&seed_genres=${config.selectedGenre}`,
-        });
-        console.log("getArtists response: ", response);
-        // todo: set app-level states with passed props from parent (app)
+        let _tracks = [];
+        let response;
+        while (_tracks.length < config.qtyArtists) {
+            response = await fetchFromSpotify({
+                token,
+                endpoint: `recommendations?limit=${
+                    config.qtyArtists * 3
+                }&market=US&seed_genres=${config.selectedGenre}`,
+            });
+            _tracks = response.tracks.filter((x) => x.preview_url !== null);
+        }
+        console.log("123456789pizza", _tracks);
+        const _artists = [];
+        for (const x of response.tracks.slice(0, 4)) {
+            _artists.push({
+                name: x.artists[0].name,
+                id: x.artists[0].id,
+            });
+        }
+        setArtists(_artists);
+        const _correctIdx = Math.floor(Math.random() * config.qtyArtists);
+        setCorrectArtist(); // 0,1,2,3
+        getSongs(_artists, _correctIdx);
     };
 
     const handlePlay = () => {

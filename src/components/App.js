@@ -6,13 +6,24 @@ import Result from "./Result";
 
 const App = () => {
     const [artists, setArtists] = useState([]);
+    const [correctArtist, setCorrectArtist] = useState();
+    const [guess, setGuess] = useState();
+    const [songs, setSongs] = useState();
     const [config, setConfig] = useState({
         selectedGenre: localStorage.getItem("selectedGenre"),
         qtySongs: Number(localStorage.getItem("qtySongs")) || 1,
         qtyArtists: Number(localStorage.getItem("qtyArtists")) || 2,
     });
 
-    const homeProps = { config, setConfig };
+    const homeProps = {
+        config,
+        setConfig,
+        setArtists,
+        setSongs,
+        setCorrectArtist,
+    };
+    const guessProps = { artists, songs, setGuess };
+    const resultProps = { artists, correctArtist, guess };
 
     return (
         <div>
@@ -20,10 +31,10 @@ const App = () => {
                 <Home {...homeProps} />
             </Route>
             <Route exact path="/guess">
-                <Guess {...homeProps} />
+                <Guess {...guessProps} />
             </Route>
             <Route exact path="/result">
-                <Result />
+                <Result {...resultProps} />
             </Route>
         </div>
     );

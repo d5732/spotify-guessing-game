@@ -7,9 +7,9 @@ import Result from "./Result";
 const App = () => {
     const [artists, setArtists] = useState([]);
     const [config, setConfig] = useState({
-        selectedGenre: localStorage.getItem('selectedGenre'),
-        qtySongs: Number(localStorage.getItem('qtySongs')) ?? 1,
-        qtyArtists: Number(localStorage.getItem('qtyArtists')) ?? 2
+        selectedGenre: localStorage.getItem("selectedGenre"),
+        qtySongs: Number(localStorage.getItem("qtySongs")) || 1,
+        qtyArtists: Number(localStorage.getItem("qtyArtists")) || 2,
     });
 
     const homeProps = { config, setConfig };
@@ -20,7 +20,7 @@ const App = () => {
                 <Home {...homeProps} />
             </Route>
             <Route exact path="/guess">
-                <Guess {...homeProps}/>
+                <Guess {...homeProps} />
             </Route>
             <Route exact path="/result">
                 <Result />

@@ -6,17 +6,15 @@ const AUTH_ENDPOINT =
     "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
 
-const Home = ({
-    config,
-    setConfig
-}) => {
+const Home = ({ config, setConfig }) => {
     const [genres, setGenres] = useState([]);
-    const [selectedGenre, setSelectedGenre] = useState(localStorage.getItem('selectedGenre') ?? '');
+    const [selectedGenre, setSelectedGenre] = useState(
+        localStorage.getItem("selectedGenre") ?? ""
+    );
     const [authLoading, setAuthLoading] = useState(false);
     const [genresLoading, setGenresLoading] = useState(false);
     const [configLoading, setConfigLoading] = useState(false);
     const [token, setToken] = useState("");
-
 
     const loadGenres = async (token) => {
         setGenresLoading(true);
@@ -59,7 +57,7 @@ const Home = ({
                 expiration: Date.now() + (expires_in - 20) * 1000,
             };
             localStorage.setItem(TOKEN_KEY, JSON.stringify(newToken));
-            console.log(newToken.value)
+            console.log(newToken.value);
             setAuthLoading(false);
             setToken(newToken.value);
             loadGenres(newToken.value);
@@ -72,24 +70,22 @@ const Home = ({
     }
 
     const getArtists = async () => {
-        console.log(token, '6')
         const response = await fetchFromSpotify({
             token,
-            endpoint: `recommendations?limit=${config.qtyArtists}&market=ES&seed_genres=${config.selectedGenre}`
+            endpoint: `recommendations?limit=${config.qtyArtists}&market=ES&seed_genres=${config.selectedGenre}`,
         });
-        console.log(response);
+        console.log("getArtists response: ", response);
         // todo: set app-level states with passed props from parent (app)
     };
 
     const handlePlay = () => {
         //todo: proceed
-        setConfig({...config, selectedGenre });
-        localStorage.setItem('selectedGenre', selectedGenre);
-        localStorage.setItem('qtyArtists', config.qtyArtists);
-        localStorage.setItem('qtySongs', config.qtySongs);
+        setConfig({ ...config, selectedGenre });
+        localStorage.setItem("selectedGenre", selectedGenre);
+        localStorage.setItem("qtyArtists", config.qtyArtists);
+        localStorage.setItem("qtySongs", config.qtySongs);
 
-        getArtists()
-
+        getArtists();
 
         // location.assign('guess');
     };
@@ -102,8 +98,8 @@ const Home = ({
                 value={selectedGenre}
                 onChange={(event) => setSelectedGenre(event.target.value)}
             >
-                <option value={localStorage.getItem('selectedGenre')}>
-                    {localStorage.getItem('selectedGenre')}
+                <option value={localStorage.getItem("selectedGenre")}>
+                    {localStorage.getItem("selectedGenre")}
                 </option>
                 {genres.map((genre) => (
                     <option key={genre} value={genre}>
@@ -118,7 +114,7 @@ const Home = ({
                 config={config}
                 setConfig={setConfig}
                 type="songs"
-                />
+            />
             <h3># Artist Choices</h3>
             <ConfigChoicesContainer
                 min={2}
@@ -126,7 +122,12 @@ const Home = ({
                 setConfig={setConfig}
                 type="artists"
             />
-            <button onClick={() => handlePlay()} disabled={selectedGenre === ''}>Play!</button>
+            <button
+                onClick={() => handlePlay()}
+                disabled={selectedGenre === ""}
+            >
+                Play!
+            </button>
             <button onClick={() => console.log(config, token)}>debug</button>
         </div>
         // todo: save current config to localStorage when proceeding to

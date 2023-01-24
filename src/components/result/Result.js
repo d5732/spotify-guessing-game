@@ -23,10 +23,14 @@ const Result = ({ artist, correctGuess, guess }) => {
             px={2}
             py={0.75}
             style={{
-                width: "10rem",
+                width: "80%",
                 textAlign: "center",
                 fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
                 textTransform: "uppercase",
+                fontSize: "0.875rem",
+                fontWeight: "500",
+                lineHeight: "1.75",
+                letterSpacing: "0.02857em",
                 ...guessStyles,
             }}
         >

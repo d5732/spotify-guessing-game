@@ -5,11 +5,14 @@ const Result = ({ artist, correctGuess, guess }) => {
     let guessStyles;
 
     if (correctGuess === artist) {
-        guessStyles = { backgroundColor: "#0b3c49" };
+        guessStyles = { backgroundColor: "#48E100" };
     } else if (guess === artist) {
         guessStyles = { backgroundColor: "red" };
     } else {
-        guessStyles = { backgroundColor: "#3f51b5" };
+        guessStyles = {
+          backgroundColor: "#63adf2",
+          boxShadow: 'none'
+        };
     }
 
     return (

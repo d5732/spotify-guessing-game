@@ -4,26 +4,33 @@ import PlayAudiosContainer from "./guess/PlayAudiosContainer";
 import GuessChoicesContainer from "./guess/GuessChoicesContainer";
 import Volume from "./guess/Volume";
 
-const Guess = ({ artists, songs, setGuess }) => {
+const Guess = ({ config, artists, songs, setGuess }) => {
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>Can you guess the artist?</h1>
-      <Box display="flex" justifyContent="center" alignItems="center">
-        {songs && <PlayAudiosContainer songs={songs} />}
-      </Box>
-      <Box display="flex" justifyContent="center" alignItems="center" style={{margin: "2rem"}}>
-        <Volume />
-      </Box>
-      <Box display="flex" justifyContent="center" alignItems="center">
-        {artists && (
-          <GuessChoicesContainer artists={artists} setGuess={setGuess} />
-        )}
-      </Box>
-      {/* <button
-                onClick={() => console.log("songs", songs, "artists", artists)}
-            >
-                debug
-            </button> */}
+      {songs?.length !== config.qtySongs &&(
+        <div>Loading...</div>
+      )}
+      {songs?.length === config.qtySongs && (
+        <>
+          <h1 style={{ textAlign: "center" }}>Can you guess the artist?</h1>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <PlayAudiosContainer songs={songs} />
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            style={{ margin: "2rem" }}
+          >
+            {songs && <Volume />}
+          </Box>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            {artists && (
+              <GuessChoicesContainer artists={artists} setGuess={setGuess} />
+            )}
+          </Box>
+        </>
+      )}
     </div>
   );
 };

@@ -90,6 +90,11 @@ const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
         });
         _tracks = response.tracks.filter((x) => x.preview_url !== null);
         _tracks = _tracks.slice(0, config.qtySongs);
+        if (_tracks.length < config.qtySongs) {
+            const _correctIdx = Math.floor(Math.random() * config.qtyArtists);
+            setCorrectGuess(_artists[_correctIdx].name);
+            getSongs({_artists, _correctIdx})
+        }
         setSongs(_tracks);
     };
 
@@ -107,7 +112,7 @@ const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
         }
         console.log("getArtists tracks:", _tracks);
         const _artists = [];
-        for (const x of response.tracks.slice(0, config.qtyArtists)) {
+        for (const x of _tracks.slice(0, config.qtyArtists)) {
             _artists.push({
                 name: x.artists[0].name,
                 id: x.artists[0].id,
@@ -198,7 +203,6 @@ const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
                     Play!
                 </Button>
             </Box>
-            {/* <button onClick={() => console.log(config, token)}>debug</button> */}
         </div>
     );
 };

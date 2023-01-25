@@ -6,12 +6,9 @@ import VolumeDown from "@material-ui/icons/VolumeDown";
 import VolumeUp from "@material-ui/icons/VolumeUp";
 import throttle from "lodash/throttle";
 
-let changes = 0;
-let changes2 = 0;
 const Volume = () => {
     const [volume, setVolume] = useState(1);
     const handleChange = throttle((event, newValue) => {
-        console.log(changes2++);
         setVolume(Number(newValue));
         Howler.volume(Number(newValue));
     }, 15);

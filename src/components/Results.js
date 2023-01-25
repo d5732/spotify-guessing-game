@@ -7,49 +7,23 @@ import ResultsContainer from "./result/ResultsContainer";
 
 const Results = ({ artists, correctGuess, guess }) => {
     return (
-        <div>
-            <Box display="flex" justifyContent="center" alignItems="center">
-                <h1 style={{ textAlign: "center" }}>
-                    {correctGuess === guess
-                        ? "Nice guess!"
-                        : "Better luck next time."}
-                </h1>
-            </Box>
-            <ResultsContainer
-                artists={artists}
-                correctGuess={correctGuess}
-                guess={guess}
-            />
-            <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                m={5}
-            >
-                <Button
-                    component={Link}
-                    to="/"
-                    variant="contained"
-                    color="primary"
-                >
-                    Home
-                </Button>
-            </Box>
-            {/* <button
-          onClick={() =>
-            console.log(
-              "artist",
-              artists,
-              "correct guess",
-              correctGuess,
-              "guess",
-              guess
-            )
-          }
-        >
-          debug
-        </button> */}
-        </div>
+      <div>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <h1 style={{ textAlign: "center" }}>
+            {correctGuess === guess ? "Nice guess!" : "Better luck next time."}
+          </h1>
+        </Box>
+        <ResultsContainer
+          artists={artists}
+          correctGuess={correctGuess}
+          guess={guess}
+        />
+        <Box display="flex" justifyContent="center" alignItems="center" m={5}>
+          <Button component={Link} to="/" variant="contained" color="primary">
+            Home
+          </Button>
+        </Box>
+      </div>
     );
 };
 

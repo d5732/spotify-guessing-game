@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Container from "@material-ui/core/Container";
 
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Guess from "./Guess";
 import Home from "./Home";
 import Results from "./Results";
@@ -48,7 +48,7 @@ const App = () => {
         setSongs,
         setCorrectGuess,
     };
-    const guessProps = { artists, songs, setGuess };
+    const guessProps = { config, artists, songs, setGuess };
     const resultProps = { artists, correctGuess, guess };
 
     return (
@@ -58,15 +58,17 @@ const App = () => {
                     maxWidth="sm"
                     style={{ marginTop: "auto", marginBottom: "auto" }}
                 >
-                    <Route exact path="/">
-                        <Home {...homeProps} />
-                    </Route>
-                    <Route exact path="/guess">
-                        <Guess {...guessProps} />
-                    </Route>
-                    <Route exact path="/results">
-                        <Results {...resultProps} />
-                    </Route>
+                    <Switch>
+                        <Route exact path="/">
+                            <Home {...homeProps} />
+                        </Route>
+                        <Route exact path="/guess">
+                            <Guess {...guessProps} />
+                        </Route>
+                        <Route exact path="/results">
+                            <Results {...resultProps} />
+                        </Route>
+                    </Switch>
                 </Container>
             </ThemeProvider>
         </div>

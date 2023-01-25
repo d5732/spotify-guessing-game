@@ -10,6 +10,7 @@ const PlayAudio = ({ idx, mp3, playing, setPlaying }) => {
             format: ["mp3"],
             loop: true,
             volume: 0.1,
+            html5: true
         })
     );
 
@@ -27,13 +28,6 @@ const PlayAudio = ({ idx, mp3, playing, setPlaying }) => {
 
     return (
         <>
-            {/* <button
-                onClick={() =>
-                    console.log("playing:", playing, "sound", sound, "id", id)
-                }
-            >
-                debug
-            </button> */}
             {!playing[idx] && (
                 <Button
                     onClick={handlePlay}

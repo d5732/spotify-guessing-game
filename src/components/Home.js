@@ -26,7 +26,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
+const Home = ({
+    config,
+    setConfig,
+    setArtists,
+    setSongs,
+    setCorrectGuess,
+    setRedirectFlag,
+}) => {
     const [genres, setGenres] = useState([]);
     const [selectedGenre, setSelectedGenre] = useState(
         localStorage.getItem("selectedGenre") ?? ""
@@ -50,6 +57,7 @@ const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
 
     useEffect(() => {
         setArtists(), setSongs(), setCorrectGuess();
+        setRedirectFlag(false);
         setAuthLoading(true);
 
         const storedTokenString = localStorage.getItem(TOKEN_KEY);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Container from "@material-ui/core/Container";
 
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Guess from "./Guess";
 import Home from "./Home";
 import Results from "./Results";
@@ -31,6 +31,7 @@ const theme = createTheme({
 });
 
 const App = () => {
+    const [redirectFlag, setRedirectFlag] = useState(true);
     const [artists, setArtists] = useState([]);
     const [correctGuess, setCorrectGuess] = useState();
     const [guess, setGuess] = useState();
@@ -47,6 +48,7 @@ const App = () => {
         setArtists,
         setSongs,
         setCorrectGuess,
+        setRedirectFlag,
     };
     const guessProps = { config, artists, songs, setGuess };
     const resultProps = { artists, correctGuess, guess };
@@ -63,10 +65,18 @@ const App = () => {
                             <Home {...homeProps} />
                         </Route>
                         <Route exact path="/guess">
-                            <Guess {...guessProps} />
+                            {redirectFlag ? (
+                                <Redirect to="/" />
+                            ) : (
+                                <Guess {...guessProps} />
+                            )}
                         </Route>
                         <Route exact path="/results">
-                            <Results {...resultProps} />
+                            {redirectFlag ? (
+                                <Redirect to="/" />
+                            ) : (
+                                <Results {...resultProps} />
+                            )}
                         </Route>
                     </Switch>
                 </Container>

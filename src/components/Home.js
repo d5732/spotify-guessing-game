@@ -43,7 +43,7 @@ const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
             token,
             endpoint: "recommendations/available-genre-seeds",
         });
-        console.log(response);
+        console.log("Loaded genres:", response);
         setGenres(response.genres);
         setGenresLoading(false);
     };
@@ -81,7 +81,7 @@ const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
         return <div>Loading...</div>;
     }
 
-    const getSongs = async (_artists, _correctIdx) => {
+    const getSongs = async ({ _artists, _correctIdx }) => {
         let _tracks;
         let response;
         response = await fetchFromSpotify({
@@ -105,7 +105,7 @@ const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
             });
             _tracks = response.tracks.filter((x) => x.preview_url !== null);
         }
-        console.log("123456789pizza", _tracks);
+        console.log("getArtists tracks:", _tracks);
         const _artists = [];
         for (const x of response.tracks.slice(0, config.qtyArtists)) {
             _artists.push({
@@ -116,22 +116,27 @@ const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
         setArtists(_artists);
         const _correctIdx = Math.floor(Math.random() * config.qtyArtists);
         setCorrectGuess(_artists[_correctIdx].name);
-        getSongs(_artists, _correctIdx);
+        return { _artists, _correctIdx };
     };
 
-    const handlePlay = () => {
-        setConfig({ ...config, selectedGenre });
+    const saveConfig = () => {
         localStorage.setItem("selectedGenre", selectedGenre);
         localStorage.setItem("qtyArtists", config.qtyArtists);
         localStorage.setItem("qtySongs", config.qtySongs);
+    };
 
-        getArtists();
+    const handlePlay = async () => {
+        saveConfig();
+        getSongs(await getArtists());
     };
 
     return (
         <div>
             <h1 style={{ textAlign: "center" }}>Guessing Game</h1>
-            <h3>Genre:</h3>
+            <p>
+                Select a musical genre, quantity of song samples, and quantity
+                of choices to guess from.{" "}
+            </p>
             <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">
                     Genre
@@ -140,7 +145,13 @@ const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
                     labelId="demo-simple-select-outlined-label"
                     id="demo-simple-select-outlined"
                     value={selectedGenre}
-                    onChange={(event) => setSelectedGenre(event.target.value)}
+                    onChange={(event) => {
+                        setSelectedGenre(event.target.value);
+                        setConfig({
+                            ...config,
+                            selectedGenre: event.target.value,
+                        });
+                    }}
                     label="Genre"
                 >
                     <MenuItem value={localStorage.getItem("selectedGenre")}>
@@ -154,14 +165,14 @@ const Home = ({ config, setConfig, setArtists, setSongs, setCorrectGuess }) => {
                 </Select>
             </FormControl>
 
-            <h3># Song Choices</h3>
+            <h3>Number of Songs</h3>
             <ConfigChoicesContainer
                 min={1}
                 config={config}
                 setConfig={setConfig}
                 type="songs"
             />
-            <h3># Artist Choices</h3>
+            <h3>Number of Choices</h3>
             <ConfigChoicesContainer
                 min={2}
                 config={config}

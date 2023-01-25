@@ -11,8 +11,8 @@ const Results = ({ artists, correctGuess, guess }) => {
             <Box display="flex" justifyContent="center" alignItems="center">
                 <h1 style={{ textAlign: "center" }}>
                     {correctGuess === guess
-                        ? "Congratulations! You win"
-                        : "Sorry, better luck next time."}
+                        ? "Nice guess!"
+                        : "Better luck next time."}
                 </h1>
             </Box>
             <ResultsContainer

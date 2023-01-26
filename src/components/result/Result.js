@@ -3,18 +3,21 @@ import Box from "@material-ui/core/Box";
 
 const Result = ({ artist, correctGuess, guess }) => {
     let guessStyles;
+    let emoji;
 
     if (correctGuess === artist) {
         guessStyles = { backgroundColor: "#48E100" };
+        emoji = "✔️"
     } else if (guess === artist) {
         guessStyles = { backgroundColor: "red" };
+        emoji = "❌"
     } else {
         guessStyles = {
           backgroundColor: "#63adf2",
           boxShadow: 'none'
         };
     }
-
+    
     return (
         <Box
             display="flex"
@@ -37,7 +40,7 @@ const Result = ({ artist, correctGuess, guess }) => {
                 ...guessStyles,
             }}
         >
-            {artist}
+            {artist}{emoji && ` ${emoji}`}
         </Box>
     );
 };

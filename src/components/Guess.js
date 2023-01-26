@@ -3,12 +3,13 @@ import Box from "@material-ui/core/Box";
 import PlayAudiosContainer from "./guess/PlayAudiosContainer";
 import GuessChoicesContainer from "./guess/GuessChoicesContainer";
 import Volume from "./guess/Volume";
+import LoadingSpinner from "./shared/LoadingSpinner";
 
 const Guess = ({ config, artists, songs, setGuess }) => {
   return (
     <div>
       {songs?.length !== config.qtySongs &&(
-        <div>Loading...</div>
+        <LoadingSpinner />
       )}
       {songs?.length === config.qtySongs && (
         <>

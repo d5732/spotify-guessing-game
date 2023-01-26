@@ -11,6 +11,7 @@ import Select from "@material-ui/core/Select";
 import { Link } from "react-router-dom";
 import fetchFromSpotify, { request } from "../services/api";
 import ConfigChoicesContainer from "./home/ConfigChoicesContainer";
+import LoadingSpinner from "./shared/LoadingSpinner";
 
 const AUTH_ENDPOINT =
     "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
@@ -86,7 +87,7 @@ const Home = ({
     }, []);
 
     if (authLoading || genresLoading) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner />;
     }
 
     const getSongs = async ({ _artists, _correctIdx }) => {

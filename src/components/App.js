@@ -61,9 +61,7 @@ const App = () => {
                     style={{ marginTop: "auto", marginBottom: "auto" }}
                 >
                     <Switch>
-                        <Route exact path="/">
-                            <Home {...homeProps} />
-                        </Route>
+                       
                         <Route exact path="/guess">
                             {redirectFlag ? (
                                 <Redirect to="/" />
@@ -77,6 +75,9 @@ const App = () => {
                             ) : (
                                 <Results {...resultProps} />
                             )}
+                        </Route>
+                        <Route path="/">
+                            <Home {...homeProps} />
                         </Route>
                     </Switch>
                 </Container>

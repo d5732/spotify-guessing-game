@@ -54,7 +54,7 @@ const App = () => {
     const resultProps = { artists, correctGuess, guess };
 
     return (
-        <div style={{ display: "flex", height: "100vh" }}>
+        <div style={{ display: "flex", height: "100%" }}>
             <ThemeProvider theme={theme}>
                 <Container
                     maxWidth="sm"
